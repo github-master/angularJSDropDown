@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-csp>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<script src="js/angular.min.js"></script>
+<script language="javascript" type="text/javascript" src="js/jquery.min.js"></script> 
+<script language="javascript" type="text/javascript" src="js/popup.js"></script> 
+<style>
+body {
+	overflow-x: hidden;
+	background: #005894;
+	color: #ffffff;
+	padding: 0 5px;
+	font-family: calibri;
+	width:500px;
+}
+
+#unitContainer {
+	padding:8px;
+	font-size: 20px;
+	width: 100%;
+  	height: 56px;
+  	display: table-cell;
+  	text-align: left;
+  	vertical-align: middle;
+
+}
+.inputs {
+	height: 55px;
+	width: 165px;
+	padding: 0 8px;
+	font-weight: bold;
+	font-size:20px;
+	font-family: calibri;
+	border-style: solid;
+	border-width: 5px 0 0 0;
+	border-color: #FFFFFF;
+}
+#startBox {
+	color:#005894;
+}
+ #endBox{
+
+ }
+ .listClass {
+ 	padding: 0 8px;
+ 	height: 40px;
+ 	color: #005894;
+ 	font-weight: bold;
+	font-size:20px;
+	font-family: calibri;
+ }
+ .sublistClass {
+ 	width: 199px;
+ }
+ .styled-select select {
+   background: transparent;
+   padding: 5px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0px;
+   height: 40px;
+   -webkit-appearance: none;
+ }
+
+.styled-select {
+   overflow: hidden;
+   background: url(../img/new_arrow.png) no-repeat right #ffffff;
+   border: 0px solid #ccc;
+   display:inline-block;
+ } 
+ #units {
+ 	width: 400px;
+ }
+ #unitFont {
+ 	padding-bottom: 10px;
+ 	margin: 0;
+ 	overflow: hidden;
+ 	display:inline-block;
+ }
+ #mainList {
+ 	width: 418px;
+ }
+ #equal {
+ 	color:#FFFFFF; 
+ 	font-size: 25px; 
+ 	font-weight:bold;
+ }
+ #sub-unita,#sub-unitb {
+ 	padding-top: 0;
+ 	margin-top:5px;
+ 	width: 181px;
+ 	font-weight:bold;
+ 	font-size: 20px;
+ 	display:inline-block;
+ }
+ #converterContainer {
+ 	margin-left: 68px;
+ 	font-weight:bold;
+ 	font-size: 16px;
+ }
+ #footer {
+ 	margin-left: 0px;
+ 	color: #808A90;
+ 	font-size: 10px;
+ 	font-weight: bold;
+ }
+</style>
+<script type="text/javascript">
+
+</script>
+</head>
+<body ng-controller="unitController">
+<div id="unitContainer">
+	<span id="unitFont"> Units &nbsp;&nbsp;</span> 
+	<span class="styled-select" id="units"> 
+		<select id="mainList" class="listClass" ng-options="item.name for item in unitList track by item.id" ng-change="listChange()" ng-model="selected"></select>
+		<!--<select ng-model="selected">
+			
+			<option ng-model="curUnit" ng-repeat="myUnit in unitList" value="{{myUnit.name}}"> {{myUnit.name}} </option>
+
+		</select>-->
+	</span>
+</div>
+<div id="converterContainer">
+ 	<p>
+ 		<span>
+ 			<input id="startBox" class="inputs" is-number  ng-model="startBox" ng-focus="startFocused()" ng-change="startInput()" ng-init="startBox=1">
+ 			&nbsp; <span id="equal"> = </span> &nbsp; 
+ 			<input id="endBox" ng-focus="endFocused()" ng-change="endInput()" class="inputs" is-number ng-model="endBox">
+ 			<!--
+ 			<input id="endBox" ng-focus="endFocused()" ng-change="endInput()" class="inputs"  type="text" ng-model="endBox">
+ 			-->
+ 		</span><br>
+	 	<span id="sub-unita" class="styled-select">
+	 		<select class="listClass sublistClass" ng-options="item.id as item.unit for item in selected.units"  ng-change="sublistChange()"  ng-selected="{{item.id ==0}}" ng-model="curUnit1" ng-init="curUnit1=unitList[0].units[0].id"></select>
+	 		<!-- THE FOLLOWING method only works on Chrome popup -->
+	 		<!--<select class="listClass sublistClass"  ng-change="sublistChange()" ng-model="curUnit1" ng-init="curUnit1=selected.units[0].id">
+	 			 <option ng-repeat="item in selected.units" ng-selected="{{item.id ==0}}" value="{{item.id}}">{{item.unit}}</option>
+	 		</select> -->
+	 	</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 	<span id="sub-unitb" class="styled-select">
+	 		<select class="listClass sublistClass" ng-options="item.id as item.unit for item in selected.units"  ng-change="sublistChange()"  ng-selected="{{item.id == selected.popular}}" ng-model="curUnit2" ng-init="curUnit2=unitList[0].popular"></select>
+	 		<!-- <select class="listClass" ng-options="item as item for item in selected.units " ng-model="selected2"></select> -->
+	 		<!--
+	 		<select class="listClass sublistClass" ng-change="sublistChange()" ng-model="curUnit2" ng-init="curUnit2=selected.popular">
+	 			 <option ng-repeat="item in selected.units" ng-selected="{{selected.popular == item.id}}" value="{{item.id}}">{{item.unit}}</option>
+	 		</select> -->
+	 	</span>
+ 	</p>
+</div>
+<div id="footer">
+IMPERIAL CONVERTER BY AOL
+</div>
+
+</body>
+</html>
